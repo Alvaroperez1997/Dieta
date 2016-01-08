@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.params=nombreAlimento\ proteinas\ carbohidratos\ grasas
+comment0.target=Alimento(java.lang.String,\ float,\ float,\ float)
+comment0.text=\r\n\ Constructor\ for\ objects\ of\ class\ Alimento\r\n
+comment1.params=
+comment1.target=void\ muestraDatos()
+comment1.text=\r\n\ M\u00E9todo\ que\ muestra\ datos\ de\ los\ alimentos\ y\ cual\ es\ el\ macronutriente\ mayoritario\r\n\ Si\ dos\ macronutrientes\ son\ iguales\ y\ son\ mayoritarios,se\ muestran\ ambos.\r\n\ \ Si\ los\ macronutrientes\ son\ mayores\ de\ 100\ gramos,\ el\ dato\ introducido\ no\ se\ considera\ v\u00E1lido.\r\n
+numComments=2

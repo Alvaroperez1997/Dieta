@@ -1,80 +1,91 @@
-
 /**
  * Write a description of class Alimento here.
  * 
- * @author (Arthur Gosling) 
- * @version (the good one)
+ * @author (your name) 
+ * @version (a version number or a date)
  */
 public class Alimento
 {
-    // instance variables - proteinas,carbohidratos y grasas
+    //Guarda el nombre del alimento
+    private String nombre;
+    //Guarda las proteínas del alimento
     private float proteinas;
+    //Guarda los carbohidratos del alimento
     private float carbohidratos;
+    //Guarda las grasas del alimento
     private float grasas;
-    private String nombreAlimento;
-    private float caloriasTotales;
-
-    private String MacroMayoritario;
-    
+    //Guarda las calorias del alimento
+    private float calorias;
     /**
      * Constructor for objects of class Alimento
      */
-    public Alimento(String nombreAlimento ,float proteinas,float carbohidratos,float grasas)
+    public Alimento(String nombre, float proteinas, float carbohidratos, float grasas)
     {
-        // initializa alimento con un parámetro de tipo String "nombre" y sus componentes de tipo float.
-        this.nombreAlimento = nombreAlimento;
+        this.nombre = nombre;
         this.proteinas = proteinas;
         this.carbohidratos = carbohidratos;
         this.grasas = grasas;
-
+        calorias = (proteinas * 4) + (carbohidratos * 4) + (grasas * 9);
+    }
+    
+    /**
+     * Nos devuelve los gramos de proteinas que tiene el alimento
+     */
+    public float getProteinas() 
+    {
+        return proteinas;
+    }
+    
+    /**
+     * Nos devuelve los gramos de grasas que tiene el alimento
+     */
+    public float getGrasas() 
+    {
+        return grasas;
+    }
+    
+    /**
+     * Nos devuelve los gramos de carbohidratos que tiene el alimento
+     */
+    public float getCarbohidratos() 
+    {
+        return carbohidratos;
+    }
+    
+    /**
+     * Nos devuelve las calorías que tiene el alimento
+     */
+    public float getCalorias() 
+    {
+        return calorias;
     }
 
     /**
-     * Método que muestra datos de los alimentos y cual es el macronutriente mayoritario
-     * Si dos macronutrientes son iguales y son mayoritarios,se muestran ambos.
-     *  Si los macronutrientes son mayores de 100 gramos, el dato introducido no se considera válido.
+     * Este método nos muestra los valores de los distintos componentes del alimento 
      */
     public void muestraDatos()
     {
-        System.out.println ("Nombre del alimento " +  nombreAlimento ) ;
-        System.out.println ("Proteínas por cada 100 gramos " +  proteinas ) ;
-        System.out.println ("Carbohidratos por cada 100 gramos " +  carbohidratos ) ;
-        System.out.println ("Grasas por cada 100 gramos " +  grasas ) ;
-        caloriasTotales =(proteinas*4)+ (carbohidratos*4)+(grasas*9);
-        if (proteinas >=0 && proteinas<=100 && carbohidratos>=0 && carbohidratos<=100 && grasas >=0 && grasas <=100)
-        {
-            if (proteinas > carbohidratos && proteinas > grasas)
-            {
-                MacroMayoritario =  " proteinas";
-            }
-            else if (carbohidratos > proteinas && carbohidratos > grasas)
-            {
-                MacroMayoritario = "carbohidratos" ;
-            }
-            else if(grasas > carbohidratos && grasas > proteinas)
-            {
-                MacroMayoritario =  "grasas";
-            }
-            else if(proteinas == carbohidratos && proteinas != grasas && proteinas > grasas )
-            {
-                MacroMayoritario =  "proteínas y carbohidratos";
-            }
-            else if(proteinas == grasas && proteinas != carbohidratos && proteinas > carbohidratos )
-            {
-                MacroMayoritario =  "proteínas y grasas";
-            }
-            else if(carbohidratos == grasas && proteinas != carbohidratos && proteinas <carbohidratos )
-            {
-                MacroMayoritario =  "carbohidratos y grasas";
-            }
+        System.out.println("Nombre: " + nombre);
+        System.out.println("Proteinas por cada 100 gramos: " + proteinas);
+        System.out.println("Carbohidratos por cada 100 gramos: " + carbohidratos);
+        System.out.println("Grasas por cada 100 gramos: " + grasas);
+        System.out.println("Calorias: " + calorias);
+        String mayoritario = "proteínas";
+        float mayor = proteinas;
+        if (carbohidratos == mayor) {
+            mayoritario = "carbohidratos, proteínas";
         }
-        else
-        {
-            System.out.println ("El macronutriente no es válido "  ) ;
+        else if (carbohidratos > mayor) {
+            mayor = carbohidratos;
+            mayoritario = "carbohidratos";
         }
-        System.out.println ("El macronutriente mayoritario es  " +  MacroMayoritario ) ;
-        System.out.println ("Las calorias totales son  " +  caloriasTotales ) ;//la ultima parte en entornos de desarrollo, lo de num1<num2ESTE EJERCICIO BUSCALO
+        if (grasas == mayor) {
+            mayoritario = "grasas, " + mayoritario;
+        }
+        else if (grasas > mayor) {
+            mayoritario = "grasas";
+        }
+        System.out.println("Componente/s mayoritario/s: " + mayoritario);
     }
-    
-    
 }
+

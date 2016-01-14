@@ -7,7 +7,7 @@
  */
 public class Usuario
 {
-        //nombre del usuario
+    //nombre del usuario
     private String nombreCompleto;
     //proteinas  ingeridas por el usuario
     private float proteinasIngeridas;
@@ -17,6 +17,10 @@ public class Usuario
     private float grasasIngeridas;
     //calorias totales ingeridas por el usuario
     private float caloriasIngeridas;
+    //Guarda el alimento mas calorico
+    private String alimentoMasCalorico;
+    //guarda las calorias de alimento mas calorico
+    private float caloriasDelAlimentoMasCalorico;
 
     /**
     *Constructor de la clase usuario
@@ -39,6 +43,10 @@ public class Usuario
         carbohidratosIngeridos = carbohidratosIngeridos + (alimentoQueCome.getCarbohidratos() / 100 * gramosDelAlimento);
         grasasIngeridas = grasasIngeridas + (alimentoQueCome.getGrasas() / 100 * gramosDelAlimento);
         caloriasIngeridas = caloriasIngeridas + (alimentoQueCome.getCalorias() / 100 * gramosDelAlimento);
+        if (alimentoQueCome.getCalorias() > caloriasDelAlimentoMasCalorico)  {
+            alimentoMasCalorico = alimentoQueCome.getNombre();
+            caloriasDelAlimentoMasCalorico = alimentoQueCome.getCalorias();
+        }
     }
     
     /**
@@ -95,5 +103,10 @@ public class Usuario
         else  {
             System.out.println("Tienen ambos las mismas calorias" + " (" + caloriasIngeridas + ")");
         }
+    }
+    
+    public void AlimentoCalorico()
+    {
+        System.out.println ("El alimento mas calórico ingerido por este usuario hasta el momento:  " + alimentoMasCalorico + " (" + caloriasDelAlimentoMasCalorico + " calorias por cada 100 gramos)");
     }
 }

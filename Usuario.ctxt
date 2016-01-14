@@ -16,4 +16,6 @@ comment4.target=java.lang.String\ getNombre()
 comment4.text=\r\n\ Nos\ devuelve\ el\ nombre\ del\ usuario\r\n
 comment5.params=usuario2
 comment5.target=void\ comparaUsuarios(Usuario)
-numComments=6
+comment6.params=
+comment6.target=void\ AlimentoCalorico()
+numComments=7

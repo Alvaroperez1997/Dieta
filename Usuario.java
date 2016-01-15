@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-
+import java.util.ArrayList;
 /**
  * Write a description of class Usuario here.
  * 
@@ -22,6 +22,10 @@ public class Usuario
     private Alimento alimentoMasCalorico;
     //Genera una lista de los alimentos comidos
     private ArrayList<Alimento> alimentosComidos;
+    //Indica si ha repetido algun alimento
+    private boolean alimentoRepetido;
+    //Contador de alimentos
+    private int contadorDeAlimentosRepetidos;
 
     /**
     *Constructor de la clase usuario
@@ -35,6 +39,8 @@ public class Usuario
         caloriasIngeridas = 0;
         alimentoMasCalorico = null;
         alimentosComidos = new ArrayList<Alimento>();
+        alimentoRepetido = false;
+        contadorDeAlimentosRepetidos = 0;
     }
     
     /**
@@ -114,5 +120,23 @@ public class Usuario
             Alimento alimentoQueCome = alimentosComidos.get(index);
             alimentoQueCome.muestraDatos();
         }
+    }
+    
+    /**
+     * Metodo que informa si algun alimento comido se ha repetido
+     */
+    public void alimentoQueSeRepite(String nombreAlimento)
+    {
+        while(alimentoRepetido != true) {
+            for (Alimento alimentoQueCome : alimentosComidos){
+                if(alimentoQueCome.getNombre().contains(nombreAlimento)) {
+                    contadorDeAlimentosRepetidos++;
+                    if (contadorDeAlimentosRepetidos == 2) {
+                        alimentoRepetido = true;
+                    }
+                }
+            }
+        }
+        System.out.println("El alimento " + nombreAlimento + " se ha comido " + contadorDeAlimentosRepetidos + " veces");
     }
 }

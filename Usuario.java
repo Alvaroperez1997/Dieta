@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 /**
  * Write a description of class Usuario here.
@@ -17,10 +18,10 @@ public class Usuario
     private float grasasIngeridas;
     //calorias totales ingeridas por el usuario
     private float caloriasIngeridas;
-    //Guarda el alimento mas calorico
-    private String alimentoMasCalorico;
-    //guarda las calorias de alimento mas calorico
-    private float caloriasDelAlimentoMasCalorico;
+    //Guarda el alimento mas calorico ingerido hasta el momento
+    private Alimento alimentoMasCalorico;
+    //Genera una lista de los alimentos comidos
+    private ArrayList<Alimento> alimentosComidos;
 
     /**
     *Constructor de la clase usuario
@@ -32,6 +33,8 @@ public class Usuario
         carbohidratosIngeridos = 0;
         grasasIngeridas = 0;
         caloriasIngeridas = 0;
+        alimentoMasCalorico = null;
+        alimentosComidos = new ArrayList<Alimento>();
     }
     
     /**
@@ -43,10 +46,38 @@ public class Usuario
         carbohidratosIngeridos = carbohidratosIngeridos + (alimentoQueCome.getCarbohidratos() / 100 * gramosDelAlimento);
         grasasIngeridas = grasasIngeridas + (alimentoQueCome.getGrasas() / 100 * gramosDelAlimento);
         caloriasIngeridas = caloriasIngeridas + (alimentoQueCome.getCalorias() / 100 * gramosDelAlimento);
-        if (alimentoQueCome.getCalorias() > caloriasDelAlimentoMasCalorico)  {
-            alimentoMasCalorico = alimentoQueCome.getNombre();
-            caloriasDelAlimentoMasCalorico = alimentoQueCome.getCalorias();
+        
+        //Añade un alimento a la lista de alimentos comidos
+        alimentosComidos.add(alimentoQueCome);
+        
+        //Si el alimento que se esta comiendo es mas calorico que
+        //el que teniamos guardado, entonces tenemos que guardar ese alimento como
+        //más calorico. Si no hemos comido ningun alimento entonces el alimento
+        //que nos estamos comiendo es el más calorico
+
+        if (alimentoMasCalorico != null) {
+            if (alimentoQueCome.getCalorias() >= alimentoMasCalorico.getCalorias()) {
+                alimentoMasCalorico = alimentoQueCome;
+            }
         }
+        else {
+            alimentoMasCalorico = alimentoQueCome;
+        }
+    }
+    
+    /**
+     * Muestra por pantalla el alimento más calorico ingerido hasta el momento y 
+     * sus calorias
+     */
+    public void alimentoMasCaloricoConsumido()
+    {
+        if (alimentoMasCalorico == null) {
+            System.out.println("No has consumido ningun alimento");
+        }
+        else {
+            System.out.println("El alimento mas calorico es: " + alimentoMasCalorico.getNombre() +
+                   "(" + alimentoMasCalorico.getCalorias() + ")");
+          }
     }
     
     /**
@@ -55,58 +86,33 @@ public class Usuario
     public void muestraDatos()
     {
         float totalNutrientes = (proteinasIngeridas + grasasIngeridas + carbohidratosIngeridos) / 100;
-        String datosProteinas = "Gramos totales de proteinas ingeridos:     " + proteinasIngeridas;
-        String datosCarbohidratos = "Gramos totales de carbohidratos ingeridos: " +             carbohidratosIngeridos;
-        String datosGrasas = "Gramos totales de grasas ingeridos:        " + grasasIngeridas;
-        if (proteinasIngeridas > 0) {
-            datosProteinas = datosProteinas + " (" + proteinasIngeridas / totalNutrientes + "%)";
+            String datosProteinas = "Gramos totales de proteinas ingeridos:     " + proteinasIngeridas;
+            String datosCarbohidratos = "Gramos totales de carbohidratos ingeridos: " +             carbohidratosIngeridos;
+            String datosGrasas = "Gramos totales de grasas ingeridos:        " + grasasIngeridas;
+            if (proteinasIngeridas > 0) {
+                datosProteinas = datosProteinas + " (" + proteinasIngeridas / totalNutrientes + "%)";
+            }
+            if (carbohidratosIngeridos > 0) {
+                datosCarbohidratos = datosCarbohidratos + " (" + carbohidratosIngeridos / totalNutrientes + "%      )";
+            }
+            if (grasasIngeridas > 0) {
+                datosGrasas = datosGrasas + " (" + grasasIngeridas / totalNutrientes + "%)";
+            }
+            System.out.println("Nombre:                                    " + nombreCompleto);
+            System.out.println(datosProteinas);    
+            System.out.println(datosCarbohidratos);
+            System.out.println(datosGrasas);
+            System.out.println("Calorias totales ingeridas:                " + caloriasIngeridas);  
         }
-        if (carbohidratosIngeridos > 0) {
-            datosCarbohidratos = datosCarbohidratos + " (" + carbohidratosIngeridos / totalNutrientes + "%)";
-        }
-        if (grasasIngeridas > 0) {
-            datosGrasas = datosGrasas + " (" + grasasIngeridas / totalNutrientes + "%)";
-        }
-        System.out.println("Nombre:                                    " + nombreCompleto);
-        System.out.println(datosProteinas);    
-        System.out.println(datosCarbohidratos);
-        System.out.println(datosGrasas);
-        System.out.println("Calorias totales ingeridas:                " + caloriasIngeridas);  
-    }
-    
-    /**
-     * Nos devuelve las calorias ingeridas
-     */
-    public float getCalorias()
-    {
-        return caloriasIngeridas;
-    }
-    
-    /**
-     * Nos devuelve el nombre del usuario
-     */
-    public String getNombre()
-    {
-        return nombreCompleto;
-    }
         
-    public void comparaUsuarios(Usuario usuario2)
+    /**
+     * Metodo que permite invocar un objeto que se ha comido y sus datos
+     */
+    public void alimentoComido(int index)
     {
-        if (caloriasIngeridas != usuario2.getCalorias())  {
-            if (caloriasIngeridas > usuario2.getCalorias())  {
-                System.out.println(nombreCompleto + " ha consumido más calorias que " + usuario2.getNombre() + " (" + caloriasIngeridas + " frente a " + usuario2.getCalorias() + " )");
-            }
-            if (caloriasIngeridas < usuario2.getCalorias())  {
-                System.out.println(nombreCompleto + " ha consumido menos calorias que " + usuario2.getNombre() + " (" + caloriasIngeridas + " frente a " + usuario2.getCalorias() + " )");
-            }
+        if (index >= 0) {
+            Alimento alimentoQueCome = alimentosComidos.get(index);
+            alimentoQueCome.muestraDatos();
         }
-        else  {
-            System.out.println("Tienen ambos las mismas calorias" + " (" + caloriasIngeridas + ")");
-        }
-    }
-    
-    public void AlimentoCalorico()
-    {
-        System.out.println ("El alimento mas calórico ingerido por este usuario hasta el momento:  " + alimentoMasCalorico + " (" + caloriasDelAlimentoMasCalorico + " calorias por cada 100 gramos)");
     }
 }
